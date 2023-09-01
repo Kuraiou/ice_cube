@@ -30,13 +30,13 @@ module IceCube
       case key
       when Symbol
         string_key = key.to_s
-        obj.keys.find { |k| k == string_key }
+        return string_key if obj.has_key?(string_key)
       when String 
         sym_key = key.to_sym
-        obj.keys.find { |k| k == sym_key }
-      else
-        key
+        return sym_key if obj.has_key?(sym_key)
       end
+
+      key
     end
   end
 end
