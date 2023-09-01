@@ -24,13 +24,19 @@ module IceCube
     private
 
     def _match_key(key)
-      return key if __getobj__.has_key? key
-      if Symbol == key.class
-        __getobj__.keys.detect { |k| return k if k == key.to_s }
-      elsif String == key.class
-        __getobj__.keys.detect { |k| return k if k.to_s == key }
+      obj = __getobj__
+      return key if obj.has_key? key
+
+      case key
+      when Symbol
+        string_key = key.to_s
+        obj.keys.find { |k| k == string_key }
+      when String 
+        sym_key = key.to_sym
+        obj.keys.find { |k| k == sym_key }
+      else
+        key
       end
-      key
     end
   end
 end
